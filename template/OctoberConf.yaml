@@ -1,0 +1,40 @@
+themes:
+  use: custom
+  repositories:
+    - url: git@bitbucket.org:example/example.git
+      path: custom
+plugins:
+  marketplace:
+    - Rainlab.Pages
+    - Rainlab.Sitemap
+    - Rainlab.Translate
+  repositories:
+    - url: git@bitbucket.org:example/example.git
+      path: example/example
+
+    - url: git@bitbucket.org:example/pages-plugin.git
+      path: rainlab/pages
+      branch: develop
+
+env:
+  dev:
+    workingdir: /var/www/example
+    app:
+      debug: true
+      url: http://localhost
+    db:
+      connection: mysql
+      host: mysql
+      port: 3306
+      database: example
+      username: root
+      password: root
+    phpcontainer: phpdock_php-fpm_1
+    mysqlcontainer: phpdock_mysql_1
+  prod:
+    workingdir: /var/www/example
+    app:
+      debug: false
+      url: http://example.com
+    phpcontainer: phpdock_php-fpm_1
+    mysqlcontainer: phpdock_mysql_1

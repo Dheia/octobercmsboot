@@ -1,0 +1,24 @@
+/*
+!.gitignore
+!composer.json
+!composer.lock
+!.env.*
+!october.yaml
+
+# Themes
+!/themes
+!/themes/**
+
+# Dont ignore project specific plugins
+!/plugins/
+/plugins/*
+!/plugins/author
+/plugins/author/*
+!/plugins/author/plugin-1
+!/plugins/author/plugin-1/**
+
+# Dont ignore project specific configs
+!/config/
+/config/*
+!/config/myconfig.php
+!/config/rainlab/
