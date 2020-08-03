@@ -13,7 +13,8 @@ var installCmd = &cobra.Command{
 	Long:  `This command is to quickly create fresh installation of octobercms with plugins and theme.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
-		installOctober(env)
+		runner := cmd.Flag("runner").Value.String()
+		installOctober(env, runner)
 	},
 }
 
@@ -31,14 +32,22 @@ func init() {
 	// is called directly, e.g.:
 
 	installCmd.Flags().StringP("env", "e", "dev", "Use prod for production or dev for development")
+	installCmd.Flags().StringP("runner", "r", "docker", "Use docker for docker or native for native runner")
 }
 
-func installOctober(env string) {
+func installOctober(env, runner string) {
 	//var runner octobercmsboot.Docker
 	october, _ := octobercmsboot.NewOctober("./october.yaml", env)
 	october.Download()
-	var phpRunner = exec.NewDocker("php-fpm", october.Env[env].WorkingDir)
-	var mysqlRunner = exec.NewDocker("mysql", "")
+	var phpRunner exec.Runner
+	var mysqlRunner exec.Runner
+	if runner == "docker" {
+		phpRunner = exec.NewDocker("php-fpm", october.Env[env].WorkingDir)
+		mysqlRunner = exec.NewDocker("mysql", "")
+	} else {
+		phpRunner = exec.Native{}
+		mysqlRunner = exec.Native{}
+	}
 	phpRunner.Run([]string{"composer", "install", "--no-scripts", "--no-interaction", "--prefer-dist"})
 	october.Env.Generate(october, phpRunner)
 	createSchemaCommand := exec.CreateSchemaCommand(october.Env[env].Db.Database, october.Env[env].Db.Username, october.Env[env].Db.Password)
