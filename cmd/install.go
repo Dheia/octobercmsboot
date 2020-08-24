@@ -14,7 +14,8 @@ var installCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
 		runner := cmd.Flag("runner").Value.String()
-		installOctober(env, runner)
+		branch := cmd.Flag("branch").Value.String()
+		installOctober(env, runner, branch)
 	},
 }
 
@@ -33,12 +34,13 @@ func init() {
 
 	installCmd.Flags().StringP("env", "e", "dev", "Use prod for production or dev for development")
 	installCmd.Flags().StringP("runner", "r", "docker", "Use docker for docker or native for native runner")
+	installCmd.Flags().StringP("branch", "b", "master", "Select the branch you want to download from github")
 }
 
-func installOctober(env, runner string) {
+func installOctober(env, runner, branch string) {
 	//var runner octobercmsboot.Docker
 	october, _ := octobercmsboot.NewOctober("./october.yaml", env)
-	october.Download()
+	october.Download(branch)
 	var phpRunner exec.Runner
 	var mysqlRunner exec.Runner
 	if runner == "docker" {

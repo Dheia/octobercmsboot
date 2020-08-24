@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func downloadFile(filepath string, url string) (err error) {
@@ -62,8 +63,9 @@ func unzip(src, dest string) error {
 			}
 		}()
 
-		oneLevelUp := f.Name[14:len(f.Name)]
-		path := filepath.Join(dest, oneLevelUp)
+		parts := strings.Split(f.Name, string(os.PathSeparator))
+		pathWithoutFirstDir := strings.Join(parts[1:len(parts)], string(os.PathSeparator))
+		path := filepath.Join(dest, pathWithoutFirstDir)
 
 		if f.FileInfo().IsDir() {
 			os.MkdirAll(path, f.Mode())

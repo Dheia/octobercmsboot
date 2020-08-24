@@ -45,13 +45,13 @@ func NewOctober(octoberYamlConfigFile, env string) (OctoberCMS, error) {
 	return octobercms, err
 }
 
-func (o OctoberCMS) Download() {
+func (o OctoberCMS) Download(branch string) {
 	if o.isInstalled() {
 		Info("October is already downloaded. Remove modules directory to download it again.")
 		return
 	}
 	Info("Download OctoberCMS")
-	err := downloadFile("october.zip", "https://github.com/octobercms/october/archive/master.zip")
+	err := downloadFile("october.zip", "https://github.com/octobercms/october/archive/" + branch + ".zip")
 	if err != nil {
 		log.Fatalf("error download october: %v", err)
 	}
