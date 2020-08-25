@@ -26,10 +26,14 @@ import (
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update octobercms, plugins, themes & database",
-	Long: `The update command install/update plugins, themes, dependencies and run any new database migrations`,
+	Long:  `The update command install/update plugins, themes, dependencies and run any new database migrations`,
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
 		october, _ := octobercmsboot.NewOctober("./october.yaml", env)
+		if !october.IsInstalled() {
+			octobercmsboot.Info("October is not installed yet. Use the install command first.")
+			return
+		}
 		var phpRunner = exec.NewDocker("php-fpm", october.Env[env].WorkingDir)
 		october.InstallPlugins(phpRunner)
 		phpRunner.Run([]string{"composer", "update", "--no-scripts", "--no-interaction", "--prefer-dist", "--lock"})

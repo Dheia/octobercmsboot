@@ -46,7 +46,7 @@ func NewOctober(octoberYamlConfigFile, env string) (OctoberCMS, error) {
 }
 
 func (o OctoberCMS) Download(branch string) {
-	if o.isInstalled() {
+	if o.IsInstalled() {
 		Info("October is already downloaded. Remove modules directory to download it again.")
 		return
 	}
@@ -111,7 +111,7 @@ func (o OctoberCMS) InstallThemes(phpRunner exec.Runner) {
 	wg.Wait()
 }
 
-func (o OctoberCMS) isInstalled() bool {
+func (o OctoberCMS) IsInstalled() bool {
 	_, err := os.Stat(rootPath() + "/modules")
 	if err == nil {
 		return true
