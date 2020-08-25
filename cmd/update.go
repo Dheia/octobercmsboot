@@ -25,7 +25,7 @@ import (
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update octobercms, plugins and theme",
+	Short: "Update octobercms, plugins, themes & database",
 	Long: `The update command install/update plugins, themes, dependencies and run any new database migrations`,
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
