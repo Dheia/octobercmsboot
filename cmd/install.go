@@ -10,7 +10,7 @@ import (
 var installCmd = &cobra.Command{
 	Use:   "install",
 	Short: "Install october",
-	Long:  `This command is to quickly create fresh installation of octobercms with plugins and theme.`,
+	Long:  `This command is to quickly create fresh installation of octobercms with plugins, theme and database setup`,
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
 		runner := cmd.Flag("runner").Value.String()

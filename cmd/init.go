@@ -35,7 +35,7 @@ var initCmd = &cobra.Command{
 	Long:  `Init command will prepared the root directory of the octobercms with the default october.yaml and .gitignore files.`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
-			return errors.New("requires 1 argument for the root directory. If current dir specify '.' (dot) ")
+			return errors.New("requires 1 argument for the root directory. If is the current dir specify '.' (dot) ")
 		}
 		return nil
 	},
@@ -68,9 +68,8 @@ func initializeOctoberProject(projectName string) {
 	var projectPath strings.Builder
 	projectPath.WriteString(projectName)
 	projectPath.WriteString("/")
-	viper.SetConfigName("octobercms")
+	viper.SetConfigName("october")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME")
 	viper.AddConfigPath("$HOME/.octobercms")
 	err := viper.ReadInConfig() // Find and read the config file
 	if err != nil { // Handle errors reading the config file

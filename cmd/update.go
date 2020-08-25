@@ -26,7 +26,7 @@ import (
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Update octobercms, plugins and theme",
-	Long: `The update command install new plugins and  themes and update the dependencies.`,
+	Long: `The update command install/update plugins, themes, dependencies and run any new database migrations`,
 	Run: func(cmd *cobra.Command, args []string) {
 		env := cmd.Flag("env").Value.String()
 		october, _ := octobercmsboot.NewOctober("./october.yaml", env)

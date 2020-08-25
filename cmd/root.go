@@ -13,9 +13,9 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "october",
+	Use:   "octobercms",
 	Short: "Boot octobercms",
-	Long: `octobercms command boot fresh latest version with plugins and themes.`,
+	Long:  `let you install fresh latest version with plugins, themes and database setup`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
