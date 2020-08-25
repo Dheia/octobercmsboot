@@ -40,6 +40,10 @@ func init() {
 func installOctober(env, runner, branch string) {
 	//var runner octobercmsboot.Docker
 	october, _ := octobercmsboot.NewOctober("./october.yaml", env)
+	if october.IsInstalled() {
+		octobercmsboot.Info("October is already downloaded. Remove modules directory to download it again.")
+		return
+	}
 	october.Download(branch)
 	var phpRunner exec.Runner
 	var mysqlRunner exec.Runner
