@@ -47,7 +47,7 @@ func NewOctober(octoberYamlConfigFile, env string) (OctoberCMS, error) {
 
 func (o OctoberCMS) Download(branch string) {
 	Info("Download OctoberCMS")
-	err := downloadFile("october.zip", "https://github.com/octobercms/october/archive/" + branch + ".zip")
+	err := downloadFile("october.zip", "https://github.com/octobercms/october/archive/"+branch+".zip")
 	if err != nil {
 		log.Fatalf("error download october: %v", err)
 	}
@@ -103,6 +103,9 @@ func (o OctoberCMS) InstallThemes(phpRunner exec.Runner) {
 			git := newGit(theme)
 			git.install()
 		}(theme)
+	}
+	if len(o.Themes.Use) > 0 {
+		phpRunner.Run([]string{"php", "artisan", "theme:use", o.Themes.Use})
 	}
 	wg.Wait()
 }
